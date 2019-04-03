@@ -38,4 +38,4 @@ def search(ia, payload):
     movie = ia.get_movie(str(_id))
     if movie is None:
         return MOVIE_NOT_FOUND % payload
-    return '%(year)s %(title)s %(plot outline)s - Rating: %(rating)s' % movie
+    return '%(year)s - Rating: %(rating)s - %(title)s - %(plot outline)s' % movie
