@@ -140,7 +140,7 @@ def getReminders(bot, channel, key, tellee):
         for (teller, verb, datetime, msg) in bot.memory['reminders'][key]:
             if datetime.startswith(today):
                 datetime = datetime[len(today) + 1:]
-            lines.append(template % (tellee, datetime, teller, verb, tellee, msg))
+            lines.append(template % (tellee, datetime, teller, tellee, msg))
 
         try:
             del bot.memory['reminders'][key]
