@@ -32,3 +32,27 @@ def get_text(bot, twit_uid):
         return twit.get('full_text')
     except:
         return None
+    
+@module.commands('tuiter')
+@module.nickname_commands('tuiter')
+@module.example('!tuiter pull tio_chema')
+def pull(bot, trigger):
+    action = trigger.group(3)
+    user = trigger.group(4)
+    index = trigger.group(5) or 0
+
+    if action is None:
+        bot.reply('Comando mal hecho, falta la accion, formato: tuiter pull tio_chema')
+        return
+    if user is None:
+        bot.reply('Comando mal hecho, falta el usuario, formato: tuiter pull tio_chema')
+        return
+
+    client = Twython(bot.config.twitter.public, bot.config.twitter.secret)
+    try:
+        i = int(index)
+        c = i + 1
+        twit = client.get_user_timeline(screen_name=user, count=c)[i]
+        bot.reply(twit.get('text'))
+    except:
+        bot.reply('No encontre twits para este usuario!')
