@@ -12,25 +12,19 @@ from sopel import module
 MOVIE_NOT_FOUND = 'No encontré la pelicula %s'
 FAILED_MOVIE_SEARCH = 'Algo salio mal'
 ACTION_IS_NONE = 'Comando mal hecho falta palabra clave `search` @imdb search pelicula'
-MOVIE_IS_NONE = 'Comando mal hecho falta nombre de la pelicula `` @imdb search pelicula'
+MOVIE_IS_NONE = 'Comando mal hecho falta nombre de la pelicula `` @imdb pelicula'
 ACTION_NOT_SUPPORTED = 'Accion %s no soportada'
 
 @module.commands('imdb')
 @module.nickname_commands('imdb')
 def imdb(bot, trigger):
-    actions = {'search': search}
-    action = trigger.group(3)
-    payload = trigger.group(4)
-    if action is None:
-        bot.reply(ACTION_IS_NONE)
-        return
+    payload = trigger.group(2)
     if payload is None:
         bot.reply(MOVIE_IS_NONE)
         return
     try:
-        f_action = actions.get(action, action_not_found)
         ia = IMDb()
-        bot.reply(f_action(ia, payload))
+        bot.reply(search(ia, payload))
     except:
         bot.reply(FAILED_MOVIE_SEARCH)
 
@@ -45,6 +39,3 @@ def search(ia, payload):
     if movie is None:
         return MOVIE_NOT_FOUND % payload
     return '%(year)s %(title)s %(plot outline)s - Rating: %(rating)s' % movie
-
-def action_not_found(*args):
-    return ACTION_NOT_SUPPORTED % args[1]
