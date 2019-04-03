@@ -132,7 +132,7 @@ def f_remind(bot, trigger):
 
 def getReminders(bot, channel, key, tellee):
     lines = []
-    template = "%s: %s <%s> %s %s %s"
+    template = "%s: %s <%s> me dijo que te dijera: %s %s"
     today = time.strftime('%d %b', time.gmtime())
 
     bot.memory['tell_lock'].acquire()
