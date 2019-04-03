@@ -16,7 +16,7 @@ from sopel.tools import Identifier, iterkeys
 from sopel.tools.time import get_timezone, format_time
 from sopel.module import commands, nickname_commands, rule, priority, example
 
-maximum = 4
+maximum = 10
 
 
 def loadReminders(fn, lock):
@@ -78,8 +78,8 @@ def setup(self):
     self.memory['reminders'] = loadReminders(self.tell_filename, self.memory['tell_lock'])
 
 
-@commands('tell', 'ask')
-@nickname_commands('tell', 'ask')
+@commands('recordar', 'chingar', 'decir')
+@nickname_commands('recordar', 'chingar', 'decir')
 @example('$nickname, tell Embolalia he broke something again.')
 def f_remind(bot, trigger):
     """Give someone a message the next time they're seen"""
@@ -87,14 +87,14 @@ def f_remind(bot, trigger):
     verb = trigger.group(1)
 
     if not trigger.group(3):
-        bot.reply("%s whom?" % verb)
+        bot.reply("%s quien?" % verb)
         return
 
     tellee = trigger.group(3).rstrip('.,:;')
     msg = trigger.group(2).lstrip(tellee).lstrip()
 
     if not msg:
-        bot.reply("%s %s what?" % (verb, tellee))
+        bot.reply("%s %s que?" % (verb, tellee))
         return
 
     tellee = Identifier(tellee)
@@ -105,7 +105,7 @@ def f_remind(bot, trigger):
     if len(tellee) > 30:
         return bot.reply('That nickname is too long.')
     if tellee == bot.nick:
-        return bot.reply("I'm here now, you can tell me whatever you want!")
+        return bot.reply("Estoy aqui ahora, decime lo que querras!")
 
     if not tellee in (Identifier(teller), bot.nick, 'me'):
         tz = get_timezone(bot.db, bot.config, None, tellee)
@@ -119,11 +119,11 @@ def f_remind(bot, trigger):
         finally:
             bot.memory['tell_lock'].release()
 
-        response = "I'll pass that on when %s is around." % tellee
+        response = "Ya se lo digo cuando %s ande en este lugar decadente." % tellee
 
         bot.reply(response)
     elif Identifier(teller) == tellee:
-        bot.say('You can %s yourself that.' % verb)
+        bot.say('Podes %s decirtelo a vos mismo.' % verb)
     else:
         bot.say("Hey, I'm not as stupid as Monty you know!")
 
