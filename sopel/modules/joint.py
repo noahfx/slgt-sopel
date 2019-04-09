@@ -35,7 +35,7 @@ def joint(bot, trigger):
     payload = trigger.group(2)
     if payload is None:
         joints = update_db(bot, trigger.sender, 'lit')
-        bot.reply(SELF_JOINT % (trigger.nick, joints))
+        bot.say(SELF_JOINT % (trigger.nick, joints))
         return
     joints = update_db(bot, trigger.sender, 'passed')
     bot.say(PASS_JOINT % (trigger.nick, payload, joints))
