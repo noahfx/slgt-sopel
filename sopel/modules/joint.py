@@ -8,8 +8,8 @@ Copyright 2019, Josue Ortega
 
 from sopel import module
 
-PASS_JOINT = '%s le da el ultimo toque al porro y se lo pasa a %s, %d porros han sido rolados en este canal'
-SELF_JOINT = '%s prende un bate. %d porros han sido encendidos en este canal'
+PASS_JOINT = '%s le da el ultimo toque al porro y luego de llenar toda la sala de humo blanco se lo pasa a %s, %d porros han sido rolados en este canal'
+SELF_JOINT = '%s prende un bate de la deliciosa hierbita. %d porros han sido encendidos en este canal'
 COMMAND_NAME = 'porro'
 
 
