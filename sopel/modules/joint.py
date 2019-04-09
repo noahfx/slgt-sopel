@@ -19,7 +19,7 @@ def initialize_db(bot, channel, key):
     return
 
 def update_db(bot, channel, key):
-    value = int(bot.db.get_channel_value(channel, key)) 
+    value = bot.db.get_channel_value(channel, key) or 0 #for some reason setup is not initialzint db
     new_val = value + 1
     bot.db.set_channel_value(channel, key, new_val)
     return new_val
