@@ -22,11 +22,11 @@ def imdb(bot, trigger):
     if payload is None:
         bot.reply(MOVIE_IS_NONE)
         return
-    try:
-        ia = IMDb()
-        bot.reply(search(ia, payload))
-    except:
-        bot.reply(FAILED_MOVIE_SEARCH)
+
+    ia = IMDb()
+    bot.reply(search(ia, payload))
+    # except:
+    #  bot.reply(FAILED_MOVIE_SEARCH)
 
 def search(ia, payload):
     movies = ia.search_movie(payload)
@@ -38,4 +38,21 @@ def search(ia, payload):
     movie = ia.get_movie(str(_id))
     if movie is None:
         return MOVIE_NOT_FOUND % payload
-    return '%(year)s - Rating: %(rating)s - %(title)s - %(plot outline)s' % movie
+
+    mkeys = movie.keys()
+    keys = ['countries', 'languages', 'year', 'rating', 'title', 'plot outline']
+
+    txt = ''
+    i = 0
+    klen = len(keys)
+
+    for k in keys:
+        if k in mkeys:
+            v = movie.get(k)
+            txt = '{} {}: %({})s'.format(txt, k.upper(), k)
+            is_last = i == klen -1
+            if not is_last:
+                txt = txt + ' - '
+        i += 1
+
+    return txt % movie
